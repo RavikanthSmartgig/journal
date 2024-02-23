@@ -11,13 +11,13 @@ const JournalComp = ({ title, des, imgUrl }) => {
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.des}>{des}</Text>
         </View>
-        <Image
+        {/* <Image
           source={{
             uri: imgUrl,
           }}
           width={100}
           height={100}
-        />
+        /> */}
       </View>
     </CardComp>
   );
