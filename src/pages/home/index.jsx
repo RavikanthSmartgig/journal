@@ -1,53 +1,19 @@
 import { View, Text, Image, FlatList, Button, Modal } from "react-native";
-import { useEffect, useState } from "react";
-
 import styles from "./style";
 import JournalComp from "../../components/journalComp";
-import CountValue from "../../components/countValue";
 import CreateScreen from "../create";
-
-const dummyData = [
-  {
-    header: "Hero 1",
-    des: "Description for Hero 1",
-    imgUrl:
-      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmFuZG9tfGVufDB8fDB8fHww",
-  },
-  {
-    header: "Hero 2",
-    des: "Description for Hero 2",
-    imgUrl:
-      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmFuZG9tfGVufDB8fDB8fHww",
-  },
-  {
-    header: "Hero 3",
-    des: "Description for Hero 3",
-    imgUrl:
-      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmFuZG9tfGVufDB8fDB8fHww",
-  },
-];
+import CustomButton from "../../components/btn";
+import Header from "../../components/headerComp";
+import { home } from "../../hook";
 
 const Home = () => {
-  const [isDisplay, setDisplay] = useState(false);
-  const [list, setList] = useState([]);
-
-  useEffect(()=>{
-    console.log("list is updated",list)
-  },[list])
-
-  const setModalVisible = () => setDisplay(!isDisplay);
-
-  const onSave = (state) => {
-    setModalVisible();
-    const newList=[...list];
-    newList.push(state);
-    setList(newList)
-  };
-
+  const { list, isDisplay, setModalVisible, onSave } = home();
   return (
-    <View>
-      <Button title="createScreen" onPress={setModalVisible} />
+    <View style={{ flex: 1, paddingTop: 10, alignItems: "center" }}>
+      <Header onCancel={() => {}} title="Home" />
       <FlatList
+        horizontal={false}
+        numColumns={2}
         data={list}
         renderItem={({ item }) => (
           <JournalComp
@@ -57,7 +23,9 @@ const Home = () => {
           />
         )}
       />
-
+      <View style={styles.btnContainer}>
+        <CustomButton onPress={setModalVisible} />
+      </View>
       <Modal
         animationType="slide"
         transparent={true}

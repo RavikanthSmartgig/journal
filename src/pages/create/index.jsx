@@ -1,5 +1,6 @@
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, Alert,StatusBar } from "react-native";
 import React, { useState } from "react";
+import Header from "../../components/headerComp";
 
 import styles from "./styles";
 import CustomInputText from "../../components/customInputText";
@@ -9,7 +10,7 @@ const INITIAL_VALUE = {
   Description: "",
 };
 
-const CreateScreen = ({ onSave,onCancel }) => {
+const CreateScreen = ({ onSave, onCancel }) => {
   const [state, setState] = useState(INITIAL_VALUE);
 
   const onChange = (key, value) => {
@@ -17,12 +18,23 @@ const CreateScreen = ({ onSave,onCancel }) => {
   };
 
   const onPress = () => {
-    onSave(state);
+    if(state.Title.trim()!="" &&state.Description.trim()!=""){
+      onSave(state);
+    }else{
+      Alert.alert("Please enter All Details")
+    }
   };
 
   return (
-    <View style={{ backgroundColor: "#fff", padding: 30, flex: 1 }}>
-      <Text>CreateScreen</Text>
+    <View style={{ backgroundColor: "#fff", flex: 1 }}>
+          <StatusBar
+        animated={true}
+        backgroundColor="#8C9EFF"
+        // barStyle={statusBarStyle}
+        // showHideTransition={statusBarTransition}
+        // hidden={hidden}
+      />
+      <Header onCancel={onCancel} title="Create Journal" />
       <CustomInputText
         heading={"Title"}
         placeholder={"Enter Title"}
@@ -33,10 +45,11 @@ const CreateScreen = ({ onSave,onCancel }) => {
         placeholder={"Enter Description"}
         onChange={onChange}
       />
-
-      <Button title="Save" onPress={onPress} />
-      <Text>some text</Text>
-      <Button title="cancel" onPress={onCancel} />
+      <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
+        <Text style={{color:"#fff"}}>Save</Text>
+      </TouchableOpacity>
+      
+      
     </View>
   );
 };
