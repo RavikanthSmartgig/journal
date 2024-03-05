@@ -1,0 +1,46 @@
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+sudo apt-get install gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+sudo touch /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo systemctl start mongod
+sudo service mongod status
+sudo systemctl enable mongod
+
+
+//After Running the above script follow these steps:
+
+Step1: Run ----> mongosh
+
+Step2: Run ----> use admin
+
+// Password can be of your choice 
+Step3: Run ----> db.createUser({user: "admin",pwd: "quiz@2021$",roles: [ { role: "root", db: "admin" } ]})
+
+Step4: exit
+
+Step5: Run ----> sudo service mongod restart
+
+
+//Now after creating a user you have to edit Config file 
+//All config files are stored in etc directory
+
+Step1: Run ----> sudo -i
+
+Step2: Navigate ----> cd /etc/
+
+Step3: Edit mongod.conf ----> vim mongod.conf
+
+Step4: Add ----> uncomment security and below write authorization: enabled
+
+Step5: Edit bindIp: 0.0.0.0
+
+Step6: :wq 
+
+Step7: exit
+
+Step8: Run ----> sudo service mongod restart
+
+Login in the MongoDB Compass
